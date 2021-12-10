@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>8 Random Squares</title>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: light dark;
+      }
+    }
+    #square-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .square {
+      min-width: 120px;
+      min-height: 120px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="square-container"></div>
+
+<script>
+  const getRandomColor = () => {
+    const chars = '0123456789ABCDEF'
+    let color = '#'
+    for (let i = 0; i < 6; i++) {
+      color += chars[Math.floor(Math.random() * 16)]
+    }
+    return color;
+  }
+
+  const numberOfSquares = Math.floor(Math.random() * (100 - 10 + 1) + 10)
+  const container = document.querySelector('#square-container')
+
+  for (let i = 0; i < numberOfSquares; i++) {
+    const square = document.createElement('div')
+    square.style.backgroundColor = getRandomColor()
+    square.classList.add('square')
+    container.appendChild(square)
+  }
+</script>
+
+</body>
+</html>
