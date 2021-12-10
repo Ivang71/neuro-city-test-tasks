@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>6 Centering</title>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+      }
+    }
+    .container {
+      height: 300px;
+      display: grid;
+      place-items: center;
+      background: teal;
+    }
+    .child {
+      width: 100px;
+      height: 100px;
+      background: darkmagenta;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="child"></div>
+</div>
+
+<div style="height: 300px; display: grid; place-items: center; background: darkgray;">
+  <div style="width: 100px; height: 100px; background: black"></div>
+</div>
+
+<script>
+  const container = document.createElement('div')
+  container.style.height = '300px'
+  container.style.display = 'grid'
+  container.style.backgroundColor = 'darkGreen'
+
+  const child = document.createElement('div')
+  child.style.margin = 'auto'
+  child.style.height = '100px'
+  child.style.width = '100px'
+  child.style.backgroundColor = 'darkRed'
+
+  container.appendChild(child)
+  document.body.appendChild(container)
+</script>
+
+</body>
+</html>
