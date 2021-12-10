@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2 Canvas</title>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+
+
+
+<script>
+  const canvas = document.querySelector('#canvas')
+
+  const width = 800
+  const height = 600
+
+  canvas.width = width
+  canvas.height = height
+  canvas.style.width = width + 'px'
+  canvas.style.height = height + 'px'
+
+  const ctx = canvas.getContext('2d')
+
+  const normalizeDegrees = (deg) => {
+    if (deg > Math.PI * 2) {
+      return deg % Math.PI * 2
+    }
+    if (deg < 0) {
+      return Math.PI * 2
+    }
+    return deg
+  }
+
+  function Circle(x, y, r) {
+    this.x = x
+    this.y = y
+    this.r = r
+    this.color = '#94bc2d'
+    this.rChange = 0.3
+
+    this.draw = (ctx) => {
+      ctx.save()
+      ctx.beginPath()
+
+      ctx.strokeStyle = this.color
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2)
+      ctx.lineWidth = 10
+      ctx.stroke()
+
+      ctx.closePath()
+      ctx.restore()
+    }
+
+    this.animate = () => {
+      this.r += this.rChange
+      if (this.r > 80) {
+        this.rChange = -0.3
+      }
+      if (this.r < 10) {
+        this.rChange = 0.3
+      }
+    }
+  }
+
+  function Triangle(x, y, sideLength) {
+    this.x = x
+    this.y = y
+    this.sideLength = sideLength
+    this.color = '#aa25d2'
+    this.deg = 0
+    this.rotationSpeed = 0.01
+
+    this.draw = (ctx) => {
+      const h = (Math.sqrt(3)/2) * this.sideLength
+      ctx.save()
+      ctx.beginPath()
+
+      ctx.translate(this.x, this.y + h / 6)
+      ctx.rotate(this.deg)
+      ctx.fillStyle = this.color
+      ctx.moveTo(0, -h / 2);
+      ctx.lineTo( -this.sideLength / 2, h / 2);
+      ctx.lineTo(this.sideLength / 2, h / 2);
+      ctx.lineTo(0, -h / 2);
+      ctx.fill()
+
+      ctx.closePath()
+      ctx.restore()
+    }
+
+    this.animate = () => {
+      this.deg += this.rotationSpeed
+      this.deg = normalizeDegrees(this.deg)
+    }
+  }
+
+  function Square(x, y, sideLength) {
+    this.x = x
+    this.y = y
+    this.sideLength = sideLength
+    this.color = '#2bb1db'
+    this.deg = 0
+    this.rotationSpeed = -0.05
+
+    this.draw = (ctx) => {
+      ctx.save()
+      ctx.beginPath()
+
+      ctx.translate(this.x, this.y)
+      ctx.rotate(this.deg)
+      ctx.fillStyle = this.color
+      ctx.rect(-this.sideLength/2, -this.sideLength/2, this.sideLength, this.sideLength)
+      ctx.fill()
+
+      ctx.closePath()
+      ctx.restore()
+    }
+
+    this.animate = () => {
+      this.deg += this.rotationSpeed
+      this.deg = normalizeDegrees(this.deg)
+    }
+  }
+
+  function Rect(x, y, width, height) {
+    this.x = x
+    this.y = y
+    this.width = width
+    this.height = height
+    this.color = 'rgba(200,110,62,0.84)'
+    this.deg = 0
+    this.rotationSpeed = -0.01
+    this.scale = 1
+    this.scaleChange = 0.006
+
+    this.draw = (ctx) => {
+      ctx.save()
+      ctx.beginPath()
+
+      ctx.translate(this.x, this.y)
+      ctx.rotate(this.deg)
+      ctx.scale(this.scale, -this.scale)
+      ctx.fillStyle = this.color
+      ctx.rect(0, 0, this.width, this.height)
+      ctx.fill()
+
+      ctx.closePath()
+      ctx.restore()
+    }
+
+    this.animate = () => {
+      this.deg += this.rotationSpeed
+      this.deg = normalizeDegrees(this.deg)
+      this.scale += this.scaleChange
+      if (this.scale > 2) {
+        this.scaleChange = -this.scaleChange
+      }
+      if (this.scale < 0.3) {
+        this.scaleChange = Math.abs(this.scaleChange)
+      }
+    }
+  }
+
+  const circle = new Circle(100, 100, 50)
+  const triangle = new Triangle(700, 100, 100)
+  const square = new Square(100, 500, 70)
+  const rect = new Rect(600, 500, 40, 100)
+
+  const renderLoop = () => {
+    ctx.clearRect(0, 0, width, height)
+
+    circle.draw(ctx)
+    circle.animate()
+
+    triangle.draw(ctx)
+    triangle.animate()
+
+    square.draw(ctx)
+    square.animate()
+
+    rect.draw(ctx)
+    rect.animate()
+
+    requestAnimationFrame(renderLoop)
+  }
+
+  renderLoop()
+</script>
+
+
+
+
+</body>
+</html>
