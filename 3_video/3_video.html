@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3 Video</title>
+  <style>
+    .wrapper {
+      width: 100%;
+      position: relative;
+    }
+    .wrapper video {
+      z-index: 100;
+      position: relative;
+      width: 80%;
+    }
+    .wrapper #time {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      display: block;
+      z-index: 150;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <div id="time"></div>
+  <video id="video" src="buck_bunny.webm" onclick="playPause()"></video>
+</div>
+
+<script>
+  const video = document.querySelector('#video')
+
+  const playPause = () => {
+    if (video.paused)
+      video.play()
+    else
+      video.pause()
+  }
+
+  const timeElem = document.querySelector('#time')
+  const renderTime = () => {
+    const t = video.currentTime
+    let minutes = Math.floor(t / 60)
+    let seconds = Math.trunc(t % 60)
+    const milliseconds = String((t - Math.floor(t)).toFixed(3)).substring(2)
+    if (minutes < 10) {
+      minutes = '0' + minutes
+    }
+    if (seconds < 10) {
+      seconds = '0' + seconds
+    }
+    timeElem.innerHTML = `${minutes}:${seconds}:${milliseconds}`
+
+    if (video.currentTime === video.duration) {
+      video.currentTime = 0
+    }
+    requestAnimationFrame(renderTime)
+  }
+  renderTime()
+</script>
+
+</body>
+</html>
