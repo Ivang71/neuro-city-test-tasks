@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>7 Trigger</title>
+</head>
+<style>
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+    }
+  }
+  #trigger {
+    width: 200px;
+    height: 200px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: coral;
+    opacity: .9;
+    font-size: 1.5rem;
+    user-select: none;
+  }
+  .box {
+    height: 100px;
+    max-height: 600px;
+    overflow: hidden;
+    transition: max-height 1s ease-out;
+  }
+  .box.collapsed {
+    max-height: 0;
+  }
+</style>
+<body>
+
+<div id="trigger">Click me!</div>
+
+<div class="box collapsed" style="background: cornflowerblue"></div>
+<div class="box collapsed" style="background: darkmagenta"></div>
+<div class="box collapsed" style="background: darkseagreen"></div>
+
+<script>
+  let animationIsHappening = false
+  document.querySelector('#trigger').addEventListener('click', () => {
+    if (animationIsHappening) return
+
+    animationIsHappening = true
+    const boxes = document.querySelectorAll('.box')
+    for (let i = 0; i < boxes.length; i++) {
+      boxes[i].classList.toggle('collapsed')
+    }
+
+    setTimeout(() => animationIsHappening = false, 1000)
+  })
+</script>
+
+</body>
+</html>
