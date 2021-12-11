@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1 Slider</title>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      overflow-y: hidden;
+    }
+    .slider {
+      font-family: sans-serif;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      -webkit-overflow-scrolling: touch;
+      overflow-x: scroll;
+    }
+    section {
+      min-width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      text-align: center;
+      display: grid;
+      place-items: center;
+    }
+    h1	{
+      color: white;
+      width: 100%;
+      font-size: calc(1rem + 3vw);
+    }
+  </style>
+</head>
+<body>
+
+<div class="slider">
+  <section>
+    <h1>Slide One</h1>
+  </section>
+  <section>
+    <h1>Slide Two</h1>
+  </section>
+  <section>
+    <h1>Slide Three</h1>
+  </section>
+  <section>
+    <h1>Slide Four</h1>
+  </section>
+  <section>
+    <h1>Slide Five</h1>
+  </section>
+</div>
+
+<script>
+  const getRandomColor = () => {
+    const chars = '0123456789ABCDEF'
+    let color = '#'
+    for (let i = 0; i < 6; i++) {
+      color += chars[Math.floor(Math.random() * 16)]
+    }
+    return color
+  }
+
+  const init = function() {
+    let items = document.querySelectorAll('section')
+    for (let i = 0; i < items.length; i++) {
+      items[i].style.background = getRandomColor()
+      items[i].style.opacity = '.7'
+    }
+  }
+  init()
+</script>
+
+</body>
+</html>
