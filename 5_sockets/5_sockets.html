@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>5 Sockets</title>
+</head>
+<style>
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+    }
+  }
+  .user-container {
+    display: flex;
+    gap: 10px;
+  }
+</style>
+<body>
+
+<button onclick="sendWsMessage()">Send message</button>
+
+<div id="user-container"></div>
+
+<script>
+  const myWs = new WebSocket('ws://localhost:9000')
+
+  myWs.onopen = () => {
+    console.log('Connected')
+  }
+
+  myWs.onmessage = (message) => {
+    console.log(message.data)
+    const users = JSON.parse(message.data)
+    const container = document.querySelector('#user-container')
+
+    for (let i = 0; i < users.length; i++) {
+      const nameEl = document.createElement('p')
+      const heightEl = document.createElement('p')
+
+      nameEl.innerHTML = users[i].name
+      heightEl.innerHTML = users[i].height
+
+      const userContainer = document.createElement('div')
+      userContainer.classList.add('user-container')
+
+      userContainer.appendChild(nameEl)
+      userContainer.appendChild(heightEl)
+
+      container.appendChild(userContainer)
+    }
+  }
+
+  const sendWsMessage = () => {
+    myWs.send(JSON.stringify({ action: 'USERS' }))
+  }
+</script>
+
+</body>
+</html>
